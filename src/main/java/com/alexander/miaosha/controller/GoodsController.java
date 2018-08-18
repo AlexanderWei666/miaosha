@@ -33,8 +33,12 @@ public class GoodsController {
     ThymeleafViewResolver thymeleafViewResolver;
 
     /**
-     * QPS:1347
+     * QPS:1347 load:11 mysql
      * 5000 * 10
+     */
+    /**
+     * 添加页面缓存后，QPS达到3187 load:5
+     *
      */
     @RequestMapping(value = "/to_list", produces = "text/html")
     @ResponseBody
@@ -42,13 +46,13 @@ public class GoodsController {
 //        if(user == null)
 //            return "login";
         model.addAttribute("user", user);
-        List<GoodsVo> goodsList = goodsService.listGoodsVo();
-        model.addAttribute("goodsList", goodsList);
-//        return "goods_list";
         //取缓存
         String html = redisService.get(GoodsKey.getGoodsList, "", String.class);
         if(!StringUtils.isEmpty(html))
             return html;
+        List<GoodsVo> goodsList = goodsService.listGoodsVo();
+        model.addAttribute("goodsList", goodsList);
+//        return "goods_list";
         /*spring5.0*/
         WebContext ctx = new WebContext(request, response, request.getServletContext(), request.getLocale(), model.asMap());
         //手动渲染

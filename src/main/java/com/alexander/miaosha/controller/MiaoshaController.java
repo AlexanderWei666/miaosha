@@ -36,8 +36,9 @@ public class MiaoshaController {
 	MiaoshaService miaoshaService;
 
 	/**
-	 * QPS:1306
+	 * QPS:1593
 	 * 5000 * 10
+	 *
 	 * */
 	@RequestMapping("/do_miaosha")
 	public String list(Model model,MiaoshaUser user,

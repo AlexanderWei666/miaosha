@@ -34,11 +34,11 @@ public class LoginController {
 
     @RequestMapping("/do_login")
     @ResponseBody
-    public Result<Boolean> doLogin(HttpServletResponse response, @Valid LoginVo loginVo,
+    public Result<String> doLogin(HttpServletResponse response, @Valid LoginVo loginVo,
                                    @CookieValue(name = MiaoshaUserService.COOKI_NAME_TOKEN, required = false) String token) {
         log.info(loginVo.toString());
         //登录
-        userService.login(response, loginVo, token);
-        return Result.success(true);
+        String newToken = userService.login(response, loginVo, token);
+        return Result.success(newToken);
     }
 }
